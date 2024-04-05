@@ -1,0 +1,12 @@
+Functional requiemenrents
+	-users should be able to search using conatacts
+	-user should be able to add new contact
+	-user should be able to update existing contact
+	-user should be able to delete old contact
+	-user should be able to merge duplicate conatacts
+	
+MODELING
+	ENTITIES
+		-CONTACT
+		-PHONE
+		-EMAIL
