@@ -7,22 +7,23 @@ public class Contact {
     private String lname;
     private String company;
     private String title;
-    private List<Phone> phone;
-    private List<Phone> email;
+    private List<Phone> phone = null;
+    private List<Email> email = null;
 
-    public Contact(String fname, String lname, String company, String title, List phones, List emails) {
+    public Contact(String fname, String lname, String company, String title, List phones,
+            List emails) {
         this.fname = fname;
         this.lname = lname;
         this.company = company;
         this.title = title;
-        this.phone = new Phone(number, elabel);
-        this.email = new Email(eaddress, elabel);
-        if(phones == null){
-
-        }else{
-            for(int i = 0; i < phones.size();i++){
-                // phone.add(new Phone(phones.get(i)[0], phones.get(i)[1])));
-                phone.add(new Phone(company, title));
+        if (phones.size() > 0) {
+            for (String list[] : phones) {
+                phone.add(new Phone(list[0], list[1]));
+            }
+        }
+        if (emails.size() > 0) {
+            for (String list[] : emails) {
+                email.add(new Email(list[0], list[1]));
             }
         }
     }
@@ -57,22 +58,6 @@ public class Contact {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Phone phone) {
-        this.phone = phone;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public void setEmail(Email email) {
-        this.email = email;
     }
 
     public String toJSONString() {

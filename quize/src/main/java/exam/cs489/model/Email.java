@@ -25,11 +25,4 @@ public class Email {
         this.label = label;
     }
 
-    @Override
-    public String toString() {
-        return "Email [address=" + address + ", label=" + label + "]";
-    }
-
-
-
 }
