@@ -1,5 +1,6 @@
 package exam.cs489.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Contact {
@@ -7,23 +8,24 @@ public class Contact {
     private String lname;
     private String company;
     private String title;
-    private List<Phone> phone = null;
-    private List<Email> email = null;
+    private List<Phone> phone = new ArrayList<>();
+    private List<Email> email = new ArrayList<>();
 
-    public Contact(String fname, String lname, String company, String title, List phones,
-            List emails) {
+    public Contact(String fname, String lname, String company, String title, String[][] phones,
+            String[][] emails) {
         this.fname = fname;
         this.lname = lname;
         this.company = company;
         this.title = title;
-        if (phones.size() > 0) {
+
+        if (phones != null) {
             for (String list[] : phones) {
-                phone.add(new Phone(list[0], list[1]));
+                if (list.length > 0) {phone.add(new Phone(list[0], list[1]));}
             }
         }
-        if (emails.size() > 0) {
+        if (emails != null) {
             for (String list[] : emails) {
-                email.add(new Email(list[0], list[1]));
+                if (list.length > 0) {email.add(new Email(list[0], list[1]));}
             }
         }
     }
@@ -61,10 +63,27 @@ public class Contact {
     }
 
     public String toJSONString() {
+        String phoneValue = "";
+        if (phone.size() > 0) {
+            for (Phone phone : phone) {
+                phoneValue = (phoneValue.isEmpty())
+                        ? phoneValue.concat(phone.getNumber()).concat("|").concat(phone.getLabel())
+                        : phoneValue.concat(", ").concat(phone.getNumber()).concat("|").concat(phone.getLabel());
+            }
+        }
+
+        String emailValue = "";
+
+        if (email.size() > 0) {
+            for (Email email : email) {
+                emailValue = (emailValue.isEmpty())
+                        ? emailValue.concat(email.getAddress()).concat("|").concat(email.getLabel())
+                        : phoneValue.concat(", ").concat(email.getAddress()).concat("|").concat(email.getLabel());
+            }
+        }
 
         return String.format(
-                "\t{ \"fname\": %s, \"lname\": %s, \"company\": %s, \"title\": %s, \"phone\": %s, \"label\": %s, \"email\": %s, \"label\": %s }",
-                fname, lname, company, title, phone.getNumber(), phone.getLabel(), email.getAddress(),
-                email.getLabel());
+                "\t{ \"fname\": %s, \"lname\": %s, \"company\": %s, \"title\": %s, \"phone\": %s, \"email\": %s }",
+                fname, lname, company, title, phoneValue, emailValue);
     }
 }
